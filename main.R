@@ -11,7 +11,7 @@ library(tidyverse)
 # -------------------------- READ DATA ----------------------------------------
 
 # set this variable to reflect the path to the .csv files
-setwd("~/universiteit/hackathon/hackathoncode/telematics_data/")
+setwd("")
 data_files <- list.files(pattern = "*.csv")
 
 # a data frame to store the results for each vehicle ID
@@ -20,7 +20,6 @@ results <- data.frame(NULL)
 # iterate over each file and add its results
 for (csv_file in data_files) {
   raw.data <- read_csv(csv_file)
-  raw.data <- read.csv("75655786.csv")
 
 # -------------------------- CLEAN DATA ---------------------------------------
 
@@ -128,7 +127,7 @@ data$partition_date = as.Date(data$partition_date)
 dist.daily <- NULL
 dist.daily <- data %>% 
               group_by(partition_date) %>% 
-              transmute(dist = (sum(distVincentyEllipsoid(cbind(data$coordinate_longitude, data$coordinate_latitude)))))
+              transmute(dist = (sum(distVincentyEllipsoid(cbind(coordinate_longitude, coordinate_latitude)))))
 View(dist.daily)
 
 # identify outliers here
@@ -137,4 +136,5 @@ View(dist.daily)
 sub.speed <- aggregate(data$speed, list(data$SP_NAME), FUN = mean)
 
 # identify outliers here
+}
         
